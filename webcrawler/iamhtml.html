@@ -1,0 +1,539 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>java从零到变身爬虫大神（一） - TTyb - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=-wBWg2jMfLNV0-ScpDNxGkoH_gCbdW1yTVJLHzPL7HE1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/AnotherEon001/bundle-AnotherEon001.css?v=dNz80TfH9-81kuLR86t4JWgT2tb_J0B779DQM4kw0WU1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/295355.css?v=IERSKX8x4nxbJBQZUxfKAV9Tsjg%3d"/>
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="/skins/AnotherEon001/bundle-AnotherEon001-mobile.css?v=e_QVfUeTMKJaQaYv1olAXHEIJXw3W1tp4SPxjnummuY1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/TTyb/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/TTyb/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/TTyb/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'TTyb', cb_enable_mathjax=true;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=wUUQbLTt-LocHM-6RVSAUwAYdrfA1Lt3ool1ZdiICfI1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+<!--PageBeginHtml Block Begin-->
+<div style="background-color: rgb(32,55,95)" id="indent">
+<h1 style="font-size: 1.5em; margin: 5px auto; color: white;">爬虫教程：<a href="http://www.tybai.com" target="_blank">www.tybai.com</a></h1>
+<p class="font">无聊就想打码，打码使我快乐</p>
+<p class="font" style="margin-top:-20px">友情链接：<a class="font" href="http://www.cnblogs.com/starwater/" target="_blank" style="text-decoration: none;">星水博客园</a></p>
+<p> 
+</p></div><hr>
+<a class="v-fork-me" href="https://github.com/TTyb/" target="_blank" rel="nofollow">
+      <img src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+</a>
+<a class="btn-to-top" title="返回顶部" target="_self" href="#top"></a>
+
+<script>
+window.tctipConfig = {
+        imagePrefix: "http://files.cnblogs.com/files/kdy11/",
+        cssPrefix:     "http://files.cnblogs.com/files/kdy11",
+        buttonImageId:  4,
+        buttonTip:  "dashang",
+        list:{
+            alipay: {qrimg: "http://files.cnblogs.com/files/TTyb/alipayimg.bmp"},
+            weixin:{qrimg: "http://files.cnblogs.com/files/TTyb/weipayimg.bmp"},
+        }
+};
+</script>
+<script src="http://files.cnblogs.com/files/kdy11/tctip.min.js"></script>
+<!--PageBeginHtml Block End-->
+
+<div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/TTyb/">TTyb</a></h1>
+<div id="subtitle">身为一名数据挖掘工程师，要会数据分析，要会数据挖掘，要会机器学习，要会编程打码，重点还要会修电脑</div>
+</div>
+<div id="sub"><div id="blog_stats">
+<div class="BlogStats">随笔 - 144, 文章 - 0, 评论 - 43, 引用 - 0</div>
+</div></div>
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/TTyb/p/5784581.html">java从零到变身爬虫大神（一）</a>
+		</h2>
+		<div class="postbody">
+		<div id="cnblogs_post_body"><p>学习java3天有余，知道一些基本语法后</p>
+<p>学习java爬虫，1天后开始出现明显效果</p>
+<p>刚开始先从最简单的爬虫逻辑入手</p>
+<p>爬虫最简单的解析面真的是这样</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.Jsoup;
+</span><span style="color: #008080;"> 2</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.nodes.Document;
+</span><span style="color: #008080;"> 3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.IOException;
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> Test {
+</span><span style="color: #008080;"> 6</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Get_Url(String url) {
+</span><span style="color: #008080;"> 7</span>         <span style="color: #0000ff;">try</span><span style="color: #000000;"> {
+</span><span style="color: #008080;"> 8</span>          Document doc =<span style="color: #000000;"> Jsoup.connect(url) 
+</span><span style="color: #008080;"> 9</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.data("query", "Java")
+</span><span style="color: #008080;">10</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.userAgent("头部")
+</span><span style="color: #008080;">11</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.cookie("auth", "token")
+</span><span style="color: #008080;">12</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.timeout(3000)
+</span><span style="color: #008080;">13</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.post()</span>
+<span style="color: #008080;">14</span> <span style="color: #000000;">          .get();
+</span><span style="color: #008080;">15</span>         } <span style="color: #0000ff;">catch</span><span style="color: #000000;"> (IOException e) {
+</span><span style="color: #008080;">16</span> <span style="color: #000000;">              e.printStackTrace();
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">19</span> }</pre>
+</div>
+<p>这只是一个函数而已</p>
+<p>那么在下面加上：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">main函数</span>
+<span style="color: #008080;">2</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) {
+</span><span style="color: #008080;">3</span>         String url = "..."<span style="color: #000000;">;
+</span><span style="color: #008080;">4</span> <span style="color: #000000;">        Get_Url(url);
+</span><span style="color: #008080;">5</span>     }</pre>
+</div>
+<p>哈哈，搞定</p>
+<p>就是这么一个爬虫了</p>
+<p>太神奇</p>
+<p>但是得到的只是网页的html页面的东西</p>
+<p>而且还没筛选</p>
+<p>那么就筛选吧</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Get_Url(String url) {
+</span><span style="color: #008080;"> 2</span>         <span style="color: #0000ff;">try</span><span style="color: #000000;"> {
+</span><span style="color: #008080;"> 3</span>          Document doc =<span style="color: #000000;"> Jsoup.connect(url) 
+</span><span style="color: #008080;"> 4</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.data("query", "Java")
+</span><span style="color: #008080;"> 5</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.userAgent("头部")
+</span><span style="color: #008080;"> 6</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.cookie("auth", "token")
+</span><span style="color: #008080;"> 7</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.timeout(3000)
+</span><span style="color: #008080;"> 8</span>           <span style="color: #008000;">//</span><span style="color: #008000;">.post()</span>
+<span style="color: #008080;"> 9</span> <span style="color: #000000;">          .get();
+</span><span style="color: #008080;">10</span>          
+<span style="color: #008080;">11</span>         <span style="color: #008000;">//</span><span style="color: #008000;">得到html的所有东西</span>
+<span style="color: #008080;">12</span>         Element content = doc.getElementById("content"<span style="color: #000000;">);
+</span><span style="color: #008080;">13</span>         <span style="color: #008000;">//</span><span style="color: #008000;">分离出html下&lt;a&gt;...&lt;/a&gt;之间的所有东西</span>
+<span style="color: #008080;">14</span>         Elements links = content.getElementsByTag("a"<span style="color: #000000;">);
+</span><span style="color: #008080;">15</span>         <span style="color: #008000;">//</span><span style="color: #008000;">Elements links = doc.select("a[href]");
+</span><span style="color: #008080;">16</span>         <span style="color: #008000;">//</span><span style="color: #008000;"> 扩展名为.png的图片</span>
+<span style="color: #008080;">17</span>         Elements pngs = doc.select("img[src$=.png]"<span style="color: #000000;">);
+</span><span style="color: #008080;">18</span>         <span style="color: #008000;">//</span><span style="color: #008000;"> class等于masthead的div标签</span>
+<span style="color: #008080;">19</span>         Element masthead = doc.select("div.masthead"<span style="color: #000000;">).first();
+</span><span style="color: #008080;">20</span>             
+<span style="color: #008080;">21</span>         <span style="color: #0000ff;">for</span><span style="color: #000000;"> (Element link : links) {
+</span><span style="color: #008080;">22</span>               <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的网址</span>
+<span style="color: #008080;">23</span>               String linkHref = link.attr("href"<span style="color: #000000;">);
+</span><span style="color: #008080;">24</span>               <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的汉字</span>
+<span style="color: #008080;">25</span>               String linkText =<span style="color: #000000;"> link.text();
+</span><span style="color: #008080;">26</span> <span style="color: #000000;">              System.out.println(linkText);
+</span><span style="color: #008080;">27</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">28</span>         } <span style="color: #0000ff;">catch</span><span style="color: #000000;"> (IOException e) {
+</span><span style="color: #008080;">29</span> <span style="color: #000000;">              e.printStackTrace();
+</span><span style="color: #008080;">30</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">31</span>     }</pre>
+</div>
+<p>那就用上面的来解析一下我的博客园</p>
+<p>解析的是&lt;a&gt;...&lt;/a&gt;之间的东西</p>
+<p><img src="http://images2015.cnblogs.com/blog/996148/201608/996148-20160818163033000-908471592.jpg" alt="" /></p>
+<p>看起来很不错，就是不错</p>
+<p>&nbsp;</p>
+<p>-------------------------------我是快乐的分割线-------------------------------</p>
+<p>&nbsp;</p>
+<p>其实还有另外一种爬虫的方法更加好</p>
+<p>他能批量爬取网页保存到本地</p>
+<p>先保存在本地再去正则什么的筛选自己想要的东西</p>
+<p>这样效率比上面的那个高了很多</p>
+<p>很多</p>
+<p>很多</p>
+<p>看代码！</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> 　　<span style="color: #008000;">//</span><span style="color: #008000;">将抓取的网页变成html文件，保存在本地</span>
+<span style="color: #008080;"> 2</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Save_Html(String url) {
+</span><span style="color: #008080;"> 3</span>         <span style="color: #0000ff;">try</span><span style="color: #000000;"> {
+</span><span style="color: #008080;"> 4</span>             File dest = <span style="color: #0000ff;">new</span> File("src/temp_html/" + "保存的html的名字.html"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 5</span>             <span style="color: #008000;">//</span><span style="color: #008000;">接收字节输入流</span>
+<span style="color: #008080;"> 6</span> <span style="color: #000000;">            InputStream is;
+</span><span style="color: #008080;"> 7</span>             <span style="color: #008000;">//</span><span style="color: #008000;">字节输出流</span>
+<span style="color: #008080;"> 8</span>             FileOutputStream fos = <span style="color: #0000ff;">new</span><span style="color: #000000;"> FileOutputStream(dest);
+</span><span style="color: #008080;"> 9</span>     
+<span style="color: #008080;">10</span>             URL temp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> URL(url);
+</span><span style="color: #008080;">11</span>             is =<span style="color: #000000;"> temp.openStream();
+</span><span style="color: #008080;">12</span>             
+<span style="color: #008080;">13</span>             <span style="color: #008000;">//</span><span style="color: #008000;">为字节输入流加缓冲</span>
+<span style="color: #008080;">14</span>             BufferedInputStream bis = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BufferedInputStream(is);
+</span><span style="color: #008080;">15</span>             <span style="color: #008000;">//</span><span style="color: #008000;">为字节输出流加缓冲</span>
+<span style="color: #008080;">16</span>             BufferedOutputStream bos = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BufferedOutputStream(fos);
+</span><span style="color: #008080;">17</span>     
+<span style="color: #008080;">18</span>             <span style="color: #0000ff;">int</span><span style="color: #000000;"> length;
+</span><span style="color: #008080;">19</span>     
+<span style="color: #008080;">20</span>             <span style="color: #0000ff;">byte</span>[] bytes = <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">byte</span>[1024*20<span style="color: #000000;">];
+</span><span style="color: #008080;">21</span>             <span style="color: #0000ff;">while</span>((length = bis.read(bytes, 0, bytes.length)) != -1<span style="color: #000000;">){
+</span><span style="color: #008080;">22</span>                 fos.write(bytes, 0<span style="color: #000000;">, length);
+</span><span style="color: #008080;">23</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">24</span> 
+<span style="color: #008080;">25</span> <span style="color: #000000;">            bos.close();
+</span><span style="color: #008080;">26</span> <span style="color: #000000;">            fos.close();
+</span><span style="color: #008080;">27</span> <span style="color: #000000;">            bis.close();
+</span><span style="color: #008080;">28</span> <span style="color: #000000;">            is.close();
+</span><span style="color: #008080;">29</span>         } <span style="color: #0000ff;">catch</span><span style="color: #000000;"> (IOException e) {
+</span><span style="color: #008080;">30</span> <span style="color: #000000;">            e.printStackTrace();
+</span><span style="color: #008080;">31</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">32</span>     }</pre>
+</div>
+<p>这个方法直接将html保存在了文件夹src/temp_html/里面</p>
+<p>在批量抓取网页的时候</p>
+<p>都是先抓下来，保存为html或者json</p>
+<p>然后在正则什么的进数据库</p>
+<p>东西在本地了，自己想怎么搞就怎么搞</p>
+<p>反爬虫关我什么事</p>
+<p>上面两个方法都会造成一个问题</p>
+<p><img src="http://images2015.cnblogs.com/blog/996148/201608/996148-20160818163928796-2014980506.jpg" alt="" /></p>
+<p>这个错误代表</p>
+<p>这种爬虫方法太low逼</p>
+<p>大部分网页都禁止了</p>
+<p>所以，要加个头</p>
+<p>就是UA</p>
+<p>方法一那里的头部那里直接</p>
+<p>&nbsp;<span class="cnblogs_code"><span style="color: #008080;">1</span> .userAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MALC)")</span>&nbsp;</p>
+<p>方法二间接加：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span>  URL temp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> URL(url);
+</span><span style="color: #008080;">2</span>  URLConnection uc =<span style="color: #000000;"> temp.openConnection();
+</span><span style="color: #008080;">3</span>  uc.addRequestProperty("User-Agent", "Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"<span style="color: #000000;">);
+</span><span style="color: #008080;">4</span>  is = temp.openStream();</pre>
+</div>
+<p>加了头部，几乎可以应付大部分网址了</p>
+<p>&nbsp;</p>
+<p>-------------------------------我是快乐的分割线-------------------------------</p>
+<p>&nbsp;</p>
+<p>将html下载到本地后需要解析啊</p>
+<p>解析啊看这里啊</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #008000;">//</span><span style="color: #008000;">解析本地的html</span>
+<span style="color: #008080;"> 2</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Get_Localhtml(String path) {
+</span><span style="color: #008080;"> 3</span> 
+<span style="color: #008080;"> 4</span>         <span style="color: #008000;">//</span><span style="color: #008000;">读取本地html的路径</span>
+<span style="color: #008080;"> 5</span>         File file = <span style="color: #0000ff;">new</span><span style="color: #000000;"> File(path);
+</span><span style="color: #008080;"> 6</span>         <span style="color: #008000;">//</span><span style="color: #008000;">生成一个数组用来存储这些路径下的文件名</span>
+<span style="color: #008080;"> 7</span>         File[] array =<span style="color: #000000;"> file.listFiles();
+</span><span style="color: #008080;"> 8</span>         <span style="color: #008000;">//</span><span style="color: #008000;">写个循环读取这些文件的名字</span>
+<span style="color: #008080;"> 9</span>         
+<span style="color: #008080;">10</span>         <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=0;i&lt;array.length;i++<span style="color: #000000;">){
+</span><span style="color: #008080;">11</span>             <span style="color: #0000ff;">try</span><span style="color: #000000;">{
+</span><span style="color: #008080;">12</span>                 <span style="color: #0000ff;">if</span><span style="color: #000000;">(array[i].isFile()){
+</span><span style="color: #008080;">13</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">文件名字</span>
+<span style="color: #008080;">14</span>                 System.out.println("正在解析网址：" +<span style="color: #000000;"> array[i].getName());
+</span><span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">下面开始解析本地的html</span>
+<span style="color: #008080;">17</span>                 Document doc = Jsoup.parse(array[i], "UTF-8"<span style="color: #000000;">);
+</span><span style="color: #008080;">18</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">得到html的所有东西</span>
+<span style="color: #008080;">19</span>                 Element content = doc.getElementById("content"<span style="color: #000000;">);
+</span><span style="color: #008080;">20</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">分离出html下&lt;a&gt;...&lt;/a&gt;之间的所有东西</span>
+<span style="color: #008080;">21</span>                 Elements links = content.getElementsByTag("a"<span style="color: #000000;">);
+</span><span style="color: #008080;">22</span>                 <span style="color: #008000;">//</span><span style="color: #008000;">Elements links = doc.select("a[href]");
+</span><span style="color: #008080;">23</span>                 <span style="color: #008000;">//</span><span style="color: #008000;"> 扩展名为.png的图片</span>
+<span style="color: #008080;">24</span>                 Elements pngs = doc.select("img[src$=.png]"<span style="color: #000000;">);
+</span><span style="color: #008080;">25</span>                 <span style="color: #008000;">//</span><span style="color: #008000;"> class等于masthead的div标签</span>
+<span style="color: #008080;">26</span>                 Element masthead = doc.select("div.masthead"<span style="color: #000000;">).first();
+</span><span style="color: #008080;">27</span>                 
+<span style="color: #008080;">28</span>                 <span style="color: #0000ff;">for</span><span style="color: #000000;"> (Element link : links) {
+</span><span style="color: #008080;">29</span>                       <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的网址</span>
+<span style="color: #008080;">30</span>                       String linkHref = link.attr("href"<span style="color: #000000;">);
+</span><span style="color: #008080;">31</span>                       <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的汉字</span>
+<span style="color: #008080;">32</span>                       String linkText =<span style="color: #000000;"> link.text();
+</span><span style="color: #008080;">33</span> <span style="color: #000000;">                      System.out.println(linkText);
+</span><span style="color: #008080;">34</span> <span style="color: #000000;">                        }
+</span><span style="color: #008080;">35</span> <span style="color: #000000;">                    }
+</span><span style="color: #008080;">36</span>                 }<span style="color: #0000ff;">catch</span><span style="color: #000000;"> (Exception e) {
+</span><span style="color: #008080;">37</span>                     System.out.println("网址：" + array[i].getName() + "解析出错"<span style="color: #000000;">);
+</span><span style="color: #008080;">38</span> <span style="color: #000000;">                    e.printStackTrace();
+</span><span style="color: #008080;">39</span>                     <span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+</span><span style="color: #008080;">40</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">41</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">42</span>     }    </pre>
+</div>
+<p>文字配的很漂亮</p>
+<p>就这样解析出来啦</p>
+<p>主函数加上</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #008000;">//</span><span style="color: #008000;">main函数</span>
+<span style="color: #008080;">2</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) {
+</span><span style="color: #008080;">3</span>         String url = "http://www.cnblogs.com/TTyb/"<span style="color: #000000;">;
+</span><span style="color: #008080;">4</span>         String path = "src/temp_html/"<span style="color: #000000;">;
+</span><span style="color: #008080;">5</span> <span style="color: #000000;">        Get_Localhtml(path);
+</span><span style="color: #008080;">6</span>     }</pre>
+</div>
+<p>那么这个文件夹里面的所有的html都要被我解析掉</p>
+<p>好啦</p>
+<p>3天java1天爬虫的结果就是这样子咯</p>
+<p>&nbsp;</p>
+<p>-------------------------------我是快乐的分割线-------------------------------</p>
+<p>&nbsp;</p>
+<p>其实对于这两种爬取html的方法来说，最好结合在一起</p>
+<p>作者测试过</p>
+<p>方法二稳定性不足</p>
+<p>方法一速度不好</p>
+<p>所以自己改正</p>
+<p>将方法一放到方法二的catch里面去</p>
+<p>当方法二出现错误的时候就会用到方法一</p>
+<p>但是当方法一也错误的时候就跳过吧</p>
+<p>结合如下：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">  1</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.Jsoup;
+</span><span style="color: #008080;">  2</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.nodes.Document;
+</span><span style="color: #008080;">  3</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.nodes.Element;
+</span><span style="color: #008080;">  4</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> org.jsoup.select.Elements;
+</span><span style="color: #008080;">  5</span> 
+<span style="color: #008080;">  6</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.BufferedInputStream;
+</span><span style="color: #008080;">  7</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.BufferedOutputStream;
+</span><span style="color: #008080;">  8</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.BufferedReader;
+</span><span style="color: #008080;">  9</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.File;
+</span><span style="color: #008080;"> 10</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.FileOutputStream;
+</span><span style="color: #008080;"> 11</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.IOException;
+</span><span style="color: #008080;"> 12</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.InputStream;
+</span><span style="color: #008080;"> 13</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.InputStreamReader;
+</span><span style="color: #008080;"> 14</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.OutputStream;
+</span><span style="color: #008080;"> 15</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.io.OutputStreamWriter;
+</span><span style="color: #008080;"> 16</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.net.HttpURLConnection;
+</span><span style="color: #008080;"> 17</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.net.URL;
+</span><span style="color: #008080;"> 18</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.net.URLConnection;
+</span><span style="color: #008080;"> 19</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.util.Date;
+</span><span style="color: #008080;"> 20</span> <span style="color: #0000ff;">import</span><span style="color: #000000;"> java.text.SimpleDateFormat;
+</span><span style="color: #008080;"> 21</span> 
+<span style="color: #008080;"> 22</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span><span style="color: #000000;"> JavaSpider {
+</span><span style="color: #008080;"> 23</span>     
+<span style="color: #008080;"> 24</span>     <span style="color: #008000;">//</span><span style="color: #008000;">将抓取的网页变成html文件，保存在本地</span>
+<span style="color: #008080;"> 25</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Save_Html(String url) {
+</span><span style="color: #008080;"> 26</span>         <span style="color: #0000ff;">try</span><span style="color: #000000;"> {
+</span><span style="color: #008080;"> 27</span>             File dest = <span style="color: #0000ff;">new</span> File("src/temp_html/" + "我是名字.html"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 28</span>             <span style="color: #008000;">//</span><span style="color: #008000;">接收字节输入流</span>
+<span style="color: #008080;"> 29</span> <span style="color: #000000;">            InputStream is;
+</span><span style="color: #008080;"> 30</span>             <span style="color: #008000;">//</span><span style="color: #008000;">字节输出流</span>
+<span style="color: #008080;"> 31</span>             FileOutputStream fos = <span style="color: #0000ff;">new</span><span style="color: #000000;"> FileOutputStream(dest);
+</span><span style="color: #008080;"> 32</span>     
+<span style="color: #008080;"> 33</span>             URL temp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> URL(url);
+</span><span style="color: #008080;"> 34</span>             URLConnection uc =<span style="color: #000000;"> temp.openConnection();
+</span><span style="color: #008080;"> 35</span>             uc.addRequestProperty("User-Agent", "Mozilla/5.0 (iPad; U; CPU OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 36</span>             is =<span style="color: #000000;"> temp.openStream();
+</span><span style="color: #008080;"> 37</span>             
+<span style="color: #008080;"> 38</span>             <span style="color: #008000;">//</span><span style="color: #008000;">为字节输入流加缓冲</span>
+<span style="color: #008080;"> 39</span>             BufferedInputStream bis = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BufferedInputStream(is);
+</span><span style="color: #008080;"> 40</span>             <span style="color: #008000;">//</span><span style="color: #008000;">为字节输出流加缓冲</span>
+<span style="color: #008080;"> 41</span>             BufferedOutputStream bos = <span style="color: #0000ff;">new</span><span style="color: #000000;"> BufferedOutputStream(fos);
+</span><span style="color: #008080;"> 42</span>     
+<span style="color: #008080;"> 43</span>             <span style="color: #0000ff;">int</span><span style="color: #000000;"> length;
+</span><span style="color: #008080;"> 44</span>     
+<span style="color: #008080;"> 45</span>             <span style="color: #0000ff;">byte</span>[] bytes = <span style="color: #0000ff;">new</span> <span style="color: #0000ff;">byte</span>[1024*20<span style="color: #000000;">];
+</span><span style="color: #008080;"> 46</span>             <span style="color: #0000ff;">while</span>((length = bis.read(bytes, 0, bytes.length)) != -1<span style="color: #000000;">){
+</span><span style="color: #008080;"> 47</span>                 fos.write(bytes, 0<span style="color: #000000;">, length);
+</span><span style="color: #008080;"> 48</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;"> 49</span> 
+<span style="color: #008080;"> 50</span> <span style="color: #000000;">            bos.close();
+</span><span style="color: #008080;"> 51</span> <span style="color: #000000;">            fos.close();
+</span><span style="color: #008080;"> 52</span> <span style="color: #000000;">            bis.close();
+</span><span style="color: #008080;"> 53</span> <span style="color: #000000;">            is.close();
+</span><span style="color: #008080;"> 54</span>         } <span style="color: #0000ff;">catch</span><span style="color: #000000;"> (IOException e) {
+</span><span style="color: #008080;"> 55</span> <span style="color: #000000;">            e.printStackTrace();
+</span><span style="color: #008080;"> 56</span>             System.out.println("openStream流错误，跳转get流"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 57</span>             <span style="color: #008000;">//</span><span style="color: #008000;">如果上面的那种方法解析错误
+</span><span style="color: #008080;"> 58</span>             <span style="color: #008000;">//</span><span style="color: #008000;">那么就用下面这一种方法解析</span>
+<span style="color: #008080;"> 59</span>             <span style="color: #0000ff;">try</span><span style="color: #000000;">{
+</span><span style="color: #008080;"> 60</span>                 Document doc =<span style="color: #000000;"> Jsoup.connect(url)
+</span><span style="color: #008080;"> 61</span>                 .userAgent("Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0; MALC)"<span style="color: #000000;">)
+</span><span style="color: #008080;"> 62</span>                 .timeout(3000<span style="color: #000000;">) 
+</span><span style="color: #008080;"> 63</span> <span style="color: #000000;">                .get();
+</span><span style="color: #008080;"> 64</span>                 
+<span style="color: #008080;"> 65</span>                 File dest = <span style="color: #0000ff;">new</span> File("src/temp_html/" + "我是名字.html"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 66</span>                 <span style="color: #0000ff;">if</span>(!<span style="color: #000000;">dest.exists())
+</span><span style="color: #008080;"> 67</span> <span style="color: #000000;">                    dest.createNewFile();
+</span><span style="color: #008080;"> 68</span>                 FileOutputStream out=<span style="color: #0000ff;">new</span> FileOutputStream(dest,<span style="color: #0000ff;">false</span><span style="color: #000000;">);
+</span><span style="color: #008080;"> 69</span>                 out.write(doc.toString().getBytes("utf-8"<span style="color: #000000;">));
+</span><span style="color: #008080;"> 70</span> <span style="color: #000000;">                out.close();
+</span><span style="color: #008080;"> 71</span> 
+<span style="color: #008080;"> 72</span>             }<span style="color: #0000ff;">catch</span><span style="color: #000000;"> (IOException E) {
+</span><span style="color: #008080;"> 73</span> <span style="color: #000000;">                E.printStackTrace();
+</span><span style="color: #008080;"> 74</span>                 System.out.println("get流错误，请检查网址是否正确"<span style="color: #000000;">);
+</span><span style="color: #008080;"> 75</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;"> 76</span>             
+<span style="color: #008080;"> 77</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;"> 78</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;"> 79</span>     
+<span style="color: #008080;"> 80</span>     <span style="color: #008000;">//</span><span style="color: #008000;">解析本地的html</span>
+<span style="color: #008080;"> 81</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> Get_Localhtml(String path) {
+</span><span style="color: #008080;"> 82</span> 
+<span style="color: #008080;"> 83</span>         <span style="color: #008000;">//</span><span style="color: #008000;">读取本地html的路径</span>
+<span style="color: #008080;"> 84</span>         File file = <span style="color: #0000ff;">new</span><span style="color: #000000;"> File(path);
+</span><span style="color: #008080;"> 85</span>         <span style="color: #008000;">//</span><span style="color: #008000;">生成一个数组用来存储这些路径下的文件名</span>
+<span style="color: #008080;"> 86</span>         File[] array =<span style="color: #000000;"> file.listFiles();
+</span><span style="color: #008080;"> 87</span>         <span style="color: #008000;">//</span><span style="color: #008000;">写个循环读取这些文件的名字</span>
+<span style="color: #008080;"> 88</span>         
+<span style="color: #008080;"> 89</span>         <span style="color: #0000ff;">for</span>(<span style="color: #0000ff;">int</span> i=0;i&lt;array.length;i++<span style="color: #000000;">){
+</span><span style="color: #008080;"> 90</span>             <span style="color: #0000ff;">try</span><span style="color: #000000;">{
+</span><span style="color: #008080;"> 91</span>                 <span style="color: #0000ff;">if</span><span style="color: #000000;">(array[i].isFile()){
+</span><span style="color: #008080;"> 92</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">文件名字</span>
+<span style="color: #008080;"> 93</span>                     System.out.println("正在解析网址：" +<span style="color: #000000;"> array[i].getName());
+</span><span style="color: #008080;"> 94</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">文件地址加文件名字
+</span><span style="color: #008080;"> 95</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">System.out.println("#####" + array[i]); 
+</span><span style="color: #008080;"> 96</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">一样的文件地址加文件名字
+</span><span style="color: #008080;"> 97</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">System.out.println("*****" + array[i].getPath()); 
+</span><span style="color: #008080;"> 98</span>                     
+<span style="color: #008080;"> 99</span>                     
+<span style="color: #008080;">100</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">下面开始解析本地的html</span>
+<span style="color: #008080;">101</span>                     Document doc = Jsoup.parse(array[i], "UTF-8"<span style="color: #000000;">);
+</span><span style="color: #008080;">102</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">得到html的所有东西</span>
+<span style="color: #008080;">103</span>                     Element content = doc.getElementById("content"<span style="color: #000000;">);
+</span><span style="color: #008080;">104</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">分离出html下&lt;a&gt;...&lt;/a&gt;之间的所有东西</span>
+<span style="color: #008080;">105</span>                     Elements links = content.getElementsByTag("a"<span style="color: #000000;">);
+</span><span style="color: #008080;">106</span>                     <span style="color: #008000;">//</span><span style="color: #008000;">Elements links = doc.select("a[href]");
+</span><span style="color: #008080;">107</span>                     <span style="color: #008000;">//</span><span style="color: #008000;"> 扩展名为.png的图片</span>
+<span style="color: #008080;">108</span>                     Elements pngs = doc.select("img[src$=.png]"<span style="color: #000000;">);
+</span><span style="color: #008080;">109</span>                     <span style="color: #008000;">//</span><span style="color: #008000;"> class等于masthead的div标签</span>
+<span style="color: #008080;">110</span>                     Element masthead = doc.select("div.masthead"<span style="color: #000000;">).first();
+</span><span style="color: #008080;">111</span>                     
+<span style="color: #008080;">112</span>                     <span style="color: #0000ff;">for</span><span style="color: #000000;"> (Element link : links) {
+</span><span style="color: #008080;">113</span>                           <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的网址</span>
+<span style="color: #008080;">114</span>                           String linkHref = link.attr("href"<span style="color: #000000;">);
+</span><span style="color: #008080;">115</span>                           <span style="color: #008000;">//</span><span style="color: #008000;">得到&lt;a&gt;...&lt;/a&gt;里面的汉字</span>
+<span style="color: #008080;">116</span>                           String linkText =<span style="color: #000000;"> link.text();
+</span><span style="color: #008080;">117</span> <span style="color: #000000;">                          System.out.println(linkText);
+</span><span style="color: #008080;">118</span> <span style="color: #000000;">                        }
+</span><span style="color: #008080;">119</span> <span style="color: #000000;">                    }
+</span><span style="color: #008080;">120</span>                 }<span style="color: #0000ff;">catch</span><span style="color: #000000;"> (Exception e) {
+</span><span style="color: #008080;">121</span>                     System.out.println("网址：" + array[i].getName() + "解析出错"<span style="color: #000000;">);
+</span><span style="color: #008080;">122</span> <span style="color: #000000;">                    e.printStackTrace();
+</span><span style="color: #008080;">123</span>                     <span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+</span><span style="color: #008080;">124</span> <span style="color: #000000;">                }
+</span><span style="color: #008080;">125</span> <span style="color: #000000;">            }
+</span><span style="color: #008080;">126</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">127</span>     <span style="color: #008000;">//</span><span style="color: #008000;">main函数</span>
+<span style="color: #008080;">128</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> main(String[] args) {
+</span><span style="color: #008080;">129</span>         String url = "http://www.cnblogs.com/TTyb/"<span style="color: #000000;">;
+</span><span style="color: #008080;">130</span>         String path = "src/temp_html/"<span style="color: #000000;">;
+</span><span style="color: #008080;">131</span>         <span style="color: #008000;">//</span><span style="color: #008000;">保存到本地的网页地址</span>
+<span style="color: #008080;">132</span> <span style="color: #000000;">        Save_Html(url);
+</span><span style="color: #008080;">133</span>         <span style="color: #008000;">//</span><span style="color: #008000;">解析本地的网页地址</span>
+<span style="color: #008080;">134</span> <span style="color: #000000;">        Get_Localhtml(path);
+</span><span style="color: #008080;">135</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">136</span> }</pre>
+</div>
+<p>总的来说</p>
+<p>java爬虫的方法比python的多好多</p>
+<p>java的库真特么变态</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2016-08-18 17:00</span> <a href='http://www.cnblogs.com/TTyb/'>TTyb</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=5784581" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(5784581);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=295355,cb_entryId=5784581,cb_blogApp=currentBlogApp,cb_blogUserGuid='3416f3a8-0f4f-e611-9fc1-ac853d9f53cc',cb_entryCreatedDate='2016/8/18 17:00:00';loadViewCount(cb_entryId);</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+<li>
+<a id="blog_nav_sitehome" href="http://www.cnblogs.com/">博客园</a></li>
+<li>
+<a id="blog_nav_myhome" class="two_words" href="http://www.cnblogs.com/TTyb/">首页</a></li>
+<li>
+<a id="blog_nav_newpost" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li>
+</li>
+<li>
+
+
+</li>
+<li>
+<a id="blog_nav_admin" class="two_words" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+<meta name="vs_showGrid" content="False">
+
+<h3>公告</h3>
+<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+
+<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/"><font face="Verdana">博客园</font></a>
+	<br />
+	Copyright &copy; TTyb
+</p>
+</div>
+</div>
+
+<!--PageEndHtml Block Begin-->
+<hr>
+<div style="text-align: center; margin: 0px auto; font-family: KaiTi; font-size: 1.2em; line-height: 150%;color: #999">
+	           <p>不用多久</p>
+		   <p>我就会升职加薪</p>
+		   <p>当上总经理</p>
+		   <p>出任CEO</p>
+		   <p>迎娶白富美</p>
+		   <p>走上人生巅峰</p>
+<img border="0" src = "http://images2015.cnblogs.com/blog/996148/201610/996148-20161010105930805-1040790027.jpg" alt="Pulpit rock" width = "500" height = "500"></div>
+<!--PageEndHtml Block End-->
+</body>
+</html>
